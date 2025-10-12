@@ -3,6 +3,7 @@ import PRM392com.example.car_service_api.dto.AuthResponseDto;
 import PRM392com.example.car_service_api.dto.LoginDto;
 import PRM392com.example.car_service_api.dto.RegisterDto;
 import PRM392com.example.car_service_api.Model.User;
+import PRM392com.example.car_service_api.dto.ResetPasswordDto;
 import PRM392com.example.car_service_api.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,34 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDto> authenticateUser(@RequestBody LoginDto loginDto) {
         AuthResponseDto authResponse = authService.login(loginDto);
+        return ResponseEntity.ok(authResponse);
+    }
+    // ...
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> emailMap) {
+        try {
+            authService.forgotPassword(emailMap.get("email"));
+            return ResponseEntity.ok(Map.of("message", "Password reset token has been sent to your email."));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // Tạo một DTO mới cho reset password
+// (tạo file dto/ResetPasswordDto.java với 2 trường token và newPassword)
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordDto resetDto) {
+        try {
+            authService.resetPassword(resetDto.getToken(), resetDto.getNewPassword());
+            return ResponseEntity.ok(Map.of("message", "Password has been reset successfully."));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PostMapping("/google")
+    public ResponseEntity<AuthResponseDto> authenticateWithGoogle(@RequestBody Map<String, String> tokenMap) {
+        String idToken = tokenMap.get("idToken");
+        AuthResponseDto authResponse = authService.loginWithGoogle(idToken);
         return ResponseEntity.ok(authResponse);
     }
 }

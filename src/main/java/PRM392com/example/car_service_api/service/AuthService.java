@@ -9,4 +9,7 @@ import PRM392com.example.car_service_api.Model.User;
 public interface AuthService {
     User register(RegisterDto registerDto);
     AuthResponseDto login(LoginDto loginDto); // Sửa kiểu trả về từ String
+    void forgotPassword(String email);
+    void resetPassword(String token, String newPassword);
+    AuthResponseDto loginWithGoogle(String idToken);
 }
