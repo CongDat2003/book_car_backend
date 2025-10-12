@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -25,4 +28,15 @@ public class User {
     private String phoneNumber;
 
     private String role;
+    // Thêm 2 trường này vào cuối lớp User.java
+    private String resetToken;
+    private LocalDateTime resetTokenExpiry;
+    private LocalDate dateOfBirth;
+    private String gender;
+    private String address;
+    private int rewardPoints;
+    private String membershipTier;
+    private LocalDate membershipExpiry;
+
+
 }

@@ -18,4 +18,5 @@ public class Service {
     private String serviceName;
     private String description;
     private BigDecimal price;
+    private String imageUrl;
 }
