@@ -40,6 +40,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/catalog/**").permitAll()
+                        .requestMatchers("/api/appointments/available-slots/**").permitAll()
+                        .requestMatchers("/api/appointments").permitAll()
                         .anyRequest().authenticated()
                 )
                 // Cấu hình session thành STATELESS vì dùng JWT

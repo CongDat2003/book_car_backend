@@ -4,19 +4,19 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
 @Entity
-@Table(name = "services")
+@Table(name = "vehicle_models")
 @Getter
 @Setter
-public class Service {
+public class VehicleModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    private String serviceName;
-    private String description;
-    private BigDecimal price;
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
+    private String name;
     private String imageUrl;
 }

@@ -6,6 +6,7 @@ import PRM392com.example.car_service_api.Model.User;
 import PRM392com.example.car_service_api.dto.UpdateUserDto;
 import PRM392com.example.car_service_api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUserDetails(@PathVariable Long id, @RequestBody UpdateUserDto updateUserDto) {
+    public ResponseEntity<User> updateUserDetails(@PathVariable Long id, @Valid @RequestBody UpdateUserDto updateUserDto) {
         return userRepository.findById(id).map(user -> {
             user.setFullName(updateUserDto.getFullName());
             user.setPhoneNumber(updateUserDto.getPhoneNumber());
