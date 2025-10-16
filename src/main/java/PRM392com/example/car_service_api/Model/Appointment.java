@@ -1,6 +1,7 @@
 package PRM392com.example.car_service_api.Model;
 
 import jakarta.persistence.*;
+import PRM392com.example.car_service_api.Model.ServiceEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +26,7 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn(name = "service_id")
-    private Service service;
+    private ServiceEntity service;
 
     private LocalDateTime appointmentDate;
     private String status;

@@ -6,6 +6,7 @@ import PRM392com.example.car_service_api.Model.User;
 import PRM392com.example.car_service_api.dto.ResetPasswordDto;
 import PRM392com.example.car_service_api.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/register") // URL: POST http://localhost:8080/api/auth/register
-    public ResponseEntity<?> registerUser(@RequestBody RegisterDto registerDto) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterDto registerDto) {
         try {
             User registeredUser = authService.register(registerDto);
             // Che mật khẩu trước khi trả về
@@ -31,7 +32,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDto> authenticateUser(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<AuthResponseDto> authenticateUser(@Valid @RequestBody LoginDto loginDto) {
         AuthResponseDto authResponse = authService.login(loginDto);
         return ResponseEntity.ok(authResponse);
     }
@@ -49,7 +50,7 @@ public class AuthController {
     // Tạo một DTO mới cho reset password
 // (tạo file dto/ResetPasswordDto.java với 2 trường token và newPassword)
     @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordDto resetDto) {
+    public ResponseEntity<?> resetPassword(@Valid @RequestBody ResetPasswordDto resetDto) {
         try {
             authService.resetPassword(resetDto.getToken(), resetDto.getNewPassword());
             return ResponseEntity.ok(Map.of("message", "Password has been reset successfully."));
